@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Input = ({ label, type, name, handleOnChange }) => {
+const Input = ({ label, type, name, handleOnChange, email }) => {
   return (
     <div className="w-full h-full flex flex-col gap-2">
       <p>{label}</p>
@@ -10,7 +10,9 @@ export const Input = ({ label, type, name, handleOnChange }) => {
         type={type}
         name={name}
         onChange={handleOnChange}
+        email={email}
       />
     </div>
   );
 };
+export default Input;

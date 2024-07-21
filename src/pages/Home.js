@@ -10,10 +10,10 @@ const Home = () => {
       <Link to="/allusers">
         <AdminCategory name={"Users"} information={"see all users"} />
       </Link>
-      <Link to="/organization">
+      <Link to="/organization/">
         <AdminCategory
           name={"Organization"}
-          information={"view organization details"}
+          information={"view organizations"}
         />
       </Link>
       <Link to="/donations">

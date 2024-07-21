@@ -1,12 +1,26 @@
 import instance from ".";
-import { storeToken } from "./storage";
+import { storeToken, removeToken, getToken } from "./storage";
 
-const logIn = async (adminInfo) => {
-  const res = await instance.post("/login", { adminInfo });
-
-  if (res.data) {
-    storeToken(res.data.token);
+const logIn = async (userInfo) => {
+  const { data } = await instance.post("/admin/signin", userInfo);
+  if (data.token) {
+    storeToken(data.token);
   }
-  return res.data;
+  return data;
 };
-export { logIn };
+const logOut = () => {
+  removeToken("token");
+};
+const register = async (userInfo) => {
+  const formData = new FormData();
+  for (let key in userInfo) {
+    formData.append(key, userInfo[key]);
+  }
+
+  const { data } = await instance.post("/admin/signup", formData);
+  if (data.token) {
+    storeToken(data.token);
+  }
+  return data;
+};
+export { logIn, logOut, register };

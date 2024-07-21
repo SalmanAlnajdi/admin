@@ -1,11 +1,9 @@
 import React from "react";
 
-const Button = ({ Button }) => {
+export const LogOut = ({ logOut }) => {
   return (
     <div className="w-full h-full bg-blue-900 rounded-lg flex justify-center items-center cursor-pointer">
-      {Button}
+      {logOut}
     </div>
   );
 };
-
-export default Button;
