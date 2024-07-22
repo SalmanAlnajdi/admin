@@ -15,6 +15,8 @@ import { Regester } from "./pages/Regester";
 import userContext from "./context/userContext";
 import UserContext from "./context/userContext";
 import { getToken } from "./api/storage";
+import EventDetails from "./Components/EventDetails";
+import UserDetail from "./Components/UserDetail";
 
 function App() {
   const [user, setUser] = useState(false);
@@ -37,9 +39,11 @@ function App() {
           <Route path="/Login" Component={Login} />
           <Route path="/Home" Component={Home} />
           <Route path="/Events" Component={Events} />
+          <Route path="/eventbyid/:id" Component={EventDetails} />
           <Route path="/allusers" Component={AllUsers} />
+          <Route path="/user/myprofile/:id" Component={UserDetail} />
           <Route path="/organization/" Component={Orgnaization} />
-          <Route path="/organization/profile" component={OrgDetails} />
+          <Route path="/organization/profile/:id" Component={OrgDetails} />
           <Route path="/donations" Component={Donations} />
           <Route path="/reports" Component={Reports} />
           <Route path="/receivers" Component={Receivers} />

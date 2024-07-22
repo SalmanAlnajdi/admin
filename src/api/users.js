@@ -2,7 +2,7 @@ import instance from ".";
 
 const getAllUsers = async () => {
   try {
-    const res = await instance.get("/users");
+    const res = await instance.get("/user/");
     return res.data;
   } catch (error) {
     console.error("Error while fetching users", error);
@@ -11,7 +11,7 @@ const getAllUsers = async () => {
 
 const getUserById = async (id) => {
   try {
-    const res = await instance.get(`/users/${id}`);
+    const res = await instance.get(`/user/myprofile/${id}`);
     return res.data;
   } catch (error) {
     console.error("Error while fetching user by ID", error);
@@ -19,7 +19,7 @@ const getUserById = async (id) => {
 };
 const deleteUser = async (id) => {
   try {
-    const res = await instance.delete(`/users/${id}`);
+    const res = await instance.delete(`/user/delete/${id}`);
     return res.data;
   } catch (error) {
     console.error("Error while deleting user", error);

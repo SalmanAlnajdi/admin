@@ -5,7 +5,7 @@ const getAllOrgs = async () => {
     const response = await instance.get("/organization/");
     return response.data;
   } catch (error) {
-    console.error("getAllOrgs", error);
+    console.error("getAllOrgs", error.response.data);
   }
 };
 const getOrgById = async (id) => {
@@ -13,7 +13,7 @@ const getOrgById = async (id) => {
     const response = await instance.get(`/organization/profile/${id}`);
     return response.data;
   } catch (error) {
-    console.error("getOrgById", error);
+    console.error("getOrgById", error.response?.data);
   }
 };
 const deleteOrgById = async (id) => {
@@ -24,7 +24,13 @@ const deleteOrgById = async (id) => {
     console.error("deleteOrgById", error);
   }
 };
+const updateOrgById = async (id, orgData) => {
+  const formData = new FormData();
+  for (const key in orgData) {
+    formData.append(key, orgData[key]);
+  }
+  const { data } = await instance.put(`/organization/profile/${id}`, formData);
+  return data;
+};
 
-/*const createOrg = async (name,history,type,from,image) => { */
-
-export { getAllOrgs, getOrgById, deleteOrgById };
+export { getAllOrgs, getOrgById, deleteOrgById, updateOrgById };
