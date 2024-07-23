@@ -8,10 +8,10 @@ import { useState } from "react";
 import { upDateEventById } from "../api/events";
 
 const EventItem = ({ event }) => {
-  const { data } = useQuery({
-    queryKey: ["events", event?._id],
-    queryFn: () => getOneEvent(event?._id),
-  });
+  //const { data } = useQuery({
+  //queryKey: ["events", event?._id],
+  //queryFn: () => getOneEvent(event?._id),
+  //});
   const [showModal, setShowModal] = useState(false);
   const [editEvent, setEditEvent] = useState({});
 
@@ -46,8 +46,8 @@ const EventItem = ({ event }) => {
         <h1 className="text-md font-bold">{event?.name}</h1>
         <img
           src={
-            data?.images
-              ? `http://localhost:8000/${data.image}`
+            event?.images
+              ? `http://localhost:8000/${event.image}`
               : `https://via.placeholder.com/200/000000?`
           }
           alt={`${event.image}-image`}

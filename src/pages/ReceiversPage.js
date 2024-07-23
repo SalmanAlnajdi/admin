@@ -1,15 +1,15 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchData } from "../api/Recevier";
+import { getAllReceivers } from "../api/Recevier";
 import ReceiverItem from "../Components/ReceiverItem";
 
 const ReceiversPage = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["receivers"],
-    queryFn: () => fetchData(),
+    queryFn: () => getAllReceivers(),
   });
   const receiverList = data?.map((receiver) => (
-    <ReceiverItem user={receiver} key={receiver.username} />
+    <ReceiverItem receiver={receiver} key={receiver._id} />
   ));
 
   return (

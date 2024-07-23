@@ -47,7 +47,7 @@ function App() {
           <Route path="/organization/profile/:id" Component={OrgDetails} />
           <Route path="/donations" Component={Donations} />
           <Route path="/donations/:id" Component={DonationDetails} />
-          <Route path="/receivers" component={ReceiversPage} />
+          <Route path="/receivers" Component={ReceiversPage} />
         </Routes>
       </div>
     </UserContext.Provider>

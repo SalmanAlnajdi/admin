@@ -1,12 +1,12 @@
 import instance from ".";
 
-const fetchData = async () => {
+const getAllReceivers = async () => {
   try {
     const response = await instance.get("/receiver/");
-    console.log("Success:", response.data);
+    return response.data;
   } catch (error) {
-    console.error("Error:", error);
+    console.error("getAllReceivers", error.response.data);
   }
 };
 
-export { fetchData };
+export { getAllReceivers };
