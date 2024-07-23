@@ -8,8 +8,7 @@ import Events from "./pages/Events";
 import { AllUsers } from "./pages/AllUsers";
 import { Orgnaization } from "./pages/Orgnaization";
 import Donations from "./pages/Donations";
-import Reports from "./pages/Reports";
-import Receivers from "./pages/Receivers";
+
 import { OrgDetails } from "./Components/OrgDetails";
 import { Regester } from "./pages/Regester";
 import userContext from "./context/userContext";
@@ -17,6 +16,8 @@ import UserContext from "./context/userContext";
 import { getToken } from "./api/storage";
 import EventDetails from "./Components/EventDetails";
 import UserDetail from "./Components/UserDetail";
+import DonationDetails from "./Components/donationsDetails";
+import ReceiversPage from "./pages/ReceiversPage";
 
 function App() {
   const [user, setUser] = useState(false);
@@ -45,8 +46,8 @@ function App() {
           <Route path="/organization/" Component={Orgnaization} />
           <Route path="/organization/profile/:id" Component={OrgDetails} />
           <Route path="/donations" Component={Donations} />
-          <Route path="/reports" Component={Reports} />
-          <Route path="/receivers" Component={Receivers} />
+          <Route path="/donations/:id" Component={DonationDetails} />
+          <Route path="/receivers" component={ReceiversPage} />
         </Routes>
       </div>
     </UserContext.Provider>

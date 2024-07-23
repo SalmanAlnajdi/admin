@@ -1,23 +1,43 @@
 import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
-import { getUserById, deleteUser } from "../api/users";
-
-import { BASE_URL } from "../api";
+import { getUserById, deleteUser, updateUser } from "../api/users";
+import { useState } from "react";
+import Modal from "./Modal";
+import { useMutation } from "@tanstack/react-query";
 
 const UserItem = ({ user }) => {
-  const queryClient = useQueryClient();
-  const { data } = useQuery({
-    queryKey: ["user", user?._id],
-    queryFn: () => getUserById(user?._id),
+  // const { data } = useQuery({
+  //   queryKey: ["user", user?._id],
+  //   queryFn: () => getUserById(user?._id),
+  // });
+  const [showModal, setShowModal] = useState(false);
+  const [editUser, setEditUser] = useState({
+    id: user._id,
   });
+  const queryClient = useQueryClient();
   const navegation = useNavigate();
   const handelDelete = async () => {
     await deleteUser(user._id);
-    queryClient.invalidateQueries("users");
+    queryClient.invalidateQueries(["users"]);
   };
   const handelNavegation = () => {
     navegation(`/user/myprofile/${user._id}`);
+  };
+  const { mutate } = useMutation({
+    mutateKey: ["editUser", user._id],
+    mutationFn: () => updateUser(editUser),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["users"]);
+      setShowModal(false);
+    },
+  });
+  const handleChange = (e) => {
+    if (e.target.name === "image") {
+      setEditUser({ ...editUser, [e.target.name]: [e.target.files[0]] });
+    } else {
+      setEditUser({ ...editUser, [e.target.name]: e.target.value });
+    }
   };
   return (
     <div className=" flex flex-row">
@@ -25,14 +45,50 @@ const UserItem = ({ user }) => {
         <h1 className="text-md font-bold">{user.username}</h1>
         <img
           src={
-            data?.image
-              ? `http://localhost:8000/${data.images}`
+            user?.image
+              ? `http://localhost:8000/${user.images}`
               : `https://via.placeholder.com/200/000000?`
           }
           alt={`${user.username}-image`}
           className="w-[200px] rounded-md
       "
         />
+        <button
+          className="border border-black px-5 py-1 rounded-md hover:bg-[black] hover:text-white"
+          onClick={() => {
+            setShowModal(true);
+          }}
+        >
+          Edit
+        </button>
+        <Modal show={showModal} onClose={() => setShowModal(false)}>
+          <h3>Edit Profile</h3>
+          <input
+            type="text"
+            name="username"
+            placeholder="name"
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="email"
+            placeholder="email"
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="phone"
+            placeholder="phone"
+            onChange={handleChange}
+          />
+          <input
+            type="file"
+            name="image"
+            placeholder="image"
+            onChange={handleChange}
+          />
+          <button onClick={mutate}>Save</button>
+        </Modal>
         <button
           onClick={handelDelete}
           className="border border-black px-5 py-1 rounded-md hover:bg-[black] hover:text-white"

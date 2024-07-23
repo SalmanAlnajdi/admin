@@ -2,10 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { getAllUsers } from "../api/users";
 import UserItem from "../Components/UserItem";
+import Modal from "../Components/Modal";
 
 export const AllUsers = () => {
-  const [query, setQuery] = useState("");
-
   const { data, isLoading } = useQuery({
     queryKey: ["users"],
     queryFn: () => getAllUsers(),

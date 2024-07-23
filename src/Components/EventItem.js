@@ -27,6 +27,10 @@ const EventItem = ({ event }) => {
   const { mutate } = useMutation({
     mutationKey: ["editEvent", event._id],
     mutationFn: () => upDateEventById(event._id, editEvent),
+    onSuccess: () => {
+      queryClient.invalidateQueries("events");
+      setShowModal(false);
+    },
   });
   const handleChange = (e) => {
     if (e.target.name === "image") {
@@ -74,7 +78,7 @@ const EventItem = ({ event }) => {
           <h3>Edit Profile</h3>
           <input
             type="text"
-            name="rname"
+            name="name"
             placeholder="name"
             onChange={handleChange}
           />

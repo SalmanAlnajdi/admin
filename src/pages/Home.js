@@ -19,11 +19,8 @@ const Home = () => {
       <Link to="/donations">
         <AdminCategory name={"Donations"} information={"view all donations"} />
       </Link>
-      <Link to="/reports">
-        <AdminCategory name={"Reports"} information={"view all reports"} />
-      </Link>
       <Link to="/receivers">
-        <AdminCategory name={"Receivers"} information={"view all receivers"} />
+        <AdminCategory name={"Receivers"} information={"view all Receivers"} />
       </Link>
     </div>
   );
