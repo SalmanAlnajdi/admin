@@ -1,15 +1,15 @@
 import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getAllReceivers } from "../api/Recevier";
+import { getAllReceivers, updateReceiverById } from "../api/Recevier";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Modal from "./Modal";
+import { useMutation } from "@tanstack/react-query";
 
 const ReceiverItem = ({ receiver }) => {
-  console.log("Receiver Data:", receiver);
+  const [editReceiver, setEditReceiver] = useState({});
+  // console.log("Receiver Data:", receiver);
   const [showModal, setShowModal] = useState(false);
-  const [editReceiver, setEditReceiver] = useState({
-    id: receiver?._id,
-  });
 
   const queryClient = useQueryClient();
   const navegation = useNavigate();
@@ -17,6 +17,21 @@ const ReceiverItem = ({ receiver }) => {
     await getAllReceivers(receiver?._id);
     queryClient.invalidateQueries(["receivers"]);
   };
+  const { mutate } = useMutation({
+    mutateKey: ["editReceivers", receiver?._id],
+    mutationFn: () =>
+      updateReceiverById(
+        receiver?._id,
+        editReceiver.name,
+        editReceiver.email,
+        editReceiver.phone,
+        editReceiver.city
+      ),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["receivers"]);
+      setShowModal(false);
+    },
+  });
   const handleChange = (e) => {
     if (e.target.name === "image") {
       setEditReceiver({
@@ -25,6 +40,7 @@ const ReceiverItem = ({ receiver }) => {
       });
     } else {
       setEditReceiver({ ...editReceiver, [e.target.name]: e.target.value });
+      console.log(">>>>>>>>>", editReceiver);
     }
   };
 
@@ -43,6 +59,41 @@ const ReceiverItem = ({ receiver }) => {
         >
           Edit
         </button>
+        <Modal show={showModal} onClose={() => setShowModal(false)}>
+          <h3>Edit Profile</h3>
+          <input
+            type="text"
+            name="name"
+            placeholder="username"
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="email"
+            placeholder="email"
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="phone"
+            placeholder="phone"
+            onChange={handleChange}
+          />
+          <input
+            text="text"
+            name="city"
+            placeholder="city"
+            onChange={handleChange}
+          />
+          <input
+            type="file"
+            name="image"
+            placeholder="image"
+            onChange={handleChange}
+          />
+
+          <button onClick={mutate}>Save</button>
+        </Modal>
       </div>
     </div>
   );

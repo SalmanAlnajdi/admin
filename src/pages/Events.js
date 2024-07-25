@@ -24,7 +24,7 @@ const Events = () => {
       queryClient.invalidateQueries("events");
     },
   });
-  const [query, setQuery] = useState("");
+
   const [newEvent, setNewEvent] = useState("");
   const { data, isLoading } = useQuery({
     queryKey: ["events"],
