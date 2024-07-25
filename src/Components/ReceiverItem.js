@@ -1,10 +1,11 @@
 import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getAllReceivers, updateReceiverById } from "../api/Recevier";
+import { deleteReceiverById, updateReceiverById } from "../api/Recevier";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import { useMutation } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 const ReceiverItem = ({ receiver }) => {
   const [editReceiver, setEditReceiver] = useState({});
@@ -32,6 +33,7 @@ const ReceiverItem = ({ receiver }) => {
       setShowModal(false);
     },
   });
+
   const handleChange = (e) => {
     if (e.target.name === "image") {
       setEditReceiver({
@@ -40,8 +42,11 @@ const ReceiverItem = ({ receiver }) => {
       });
     } else {
       setEditReceiver({ ...editReceiver, [e.target.name]: e.target.value });
-      console.log(">>>>>>>>>", editReceiver);
     }
+  };
+  const handelDelete = async () => {
+    await deleteReceiverById(receiver._id);
+    queryClient.invalidateQueries(["receivers"]);
   };
 
   return (
@@ -58,6 +63,13 @@ const ReceiverItem = ({ receiver }) => {
           }}
         >
           Edit
+        </button>
+
+        <button
+          onClick={handelDelete}
+          className="border border-black px-5 py-1 rounded-md hover:bg-[black] hover:text-white"
+        >
+          delete
         </button>
         <Modal show={showModal} onClose={() => setShowModal(false)}>
           <h3>Edit Profile</h3>

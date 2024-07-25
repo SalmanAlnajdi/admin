@@ -41,5 +41,13 @@ const createReceiver = async (event) => {
     return data;
   }
 };
-
-export { getAllReceivers, updateReceiverById, createReceiver };
+const deleteReceiverById = async (id) => {
+  const res = await instance.delete(`/receiver/${id}`);
+  return res.data;
+};
+export {
+  getAllReceivers,
+  updateReceiverById,
+  createReceiver,
+  deleteReceiverById,
+};
