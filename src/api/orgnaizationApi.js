@@ -18,10 +18,10 @@ const getOrgById = async (id) => {
 };
 const deleteOrgById = async (id) => {
   try {
-    const response = await instance.delete(`/orgnaizations/${id}`);
+    const response = await instance.delete(`/organization/delete/${id}`);
     return response.data;
   } catch (error) {
-    console.error("deleteOrgById", error);
+    console.error("deleteOrgById", error.massage);
   }
 };
 const updateOrgById = async (id, orgData) => {

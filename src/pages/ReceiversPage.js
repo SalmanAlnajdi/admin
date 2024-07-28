@@ -53,6 +53,7 @@ const ReceiversPage = () => {
   const receiverList = data?.map((receiver) => (
     <ReceiverItem receiver={receiver} key={receiver.name} />
   ));
+  const totalReceivers = data?.length;
 
   return (
     <div className="bg-green-400 w-full h-100% flex flex-wrap gap-3 justify-center items-center p-3">
@@ -64,6 +65,9 @@ const ReceiversPage = () => {
       >
         create
       </button>
+      <div className="w-full flex flex-wrap gap-3">
+        total receiver: {totalReceivers}
+      </div>
       <div className=" flex justify-center items-center w-full">
         <Modal show={showModal} onClose={() => setShowModal(false)}>
           <h3>Create New Receiver</h3>

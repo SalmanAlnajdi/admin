@@ -8,37 +8,61 @@ import { createEvent } from "../api/events";
 
 const Events = () => {
   const [showModal, setShowModal] = useState(false);
+  const [query, setQuery] = useState("");
   const [name, setName] = useState("");
+  const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [address, setAddress] = useState("");
   const [gender, setGender] = useState("");
   const [Participants, setParticipants] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationKey: ["create Event"],
     mutationFn: () =>
-      createEvent({ name, description, date, address, gender, Participants }),
+      createEvent({
+        name,
+        description,
+        date,
+        address,
+        image,
+        gender,
+        Participants,
+        startTime,
+        endTime,
+      }),
     onSuccess: () => {
       setShowModal(false);
       queryClient.invalidateQueries("events");
     },
   });
 
-  const [newEvent, setNewEvent] = useState("");
   const { data, isLoading } = useQuery({
     queryKey: ["events"],
     queryFn: () => getAllEvents(),
   });
   if (isLoading) return <p>Loading...</p>;
+  const toatalEvents = data?.length;
 
-  const eventList = data?.map((event) => (
-    <EventItem event={event} key={event.name} />
-  ));
+  const eventList = data
+    ?.filter((event) => event.name.toLowerCase().includes(query.toLowerCase()))
+    ?.map((event) => <EventItem event={event} key={event.name} />);
 
   return (
     <>
       <div className="bg-green-400 w-full h-100% flex flex-wrap gap-3 justify-center items-center py-5">
+        <div>
+          <input
+            type="text"
+            placeholder="Search events..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="border border-gray-300 rounded-md p-2 w-full"
+          />
+          <div> total Event: {toatalEvents}</div>
+        </div>
         <button
           onClick={() => {
             setShowModal(true);
@@ -71,6 +95,20 @@ const Events = () => {
               className="border border-gray-300 rounded-md p-2 mb-4 w-full"
             />
             <input
+              type="time"
+              placeholder="time"
+              value={startTime}
+              onChange={(e) => setStartTime(e.target.value)}
+              className="border border-gray-300 rounded-md p-2 mb-4 w-full"
+            />
+            <input
+              type="time"
+              placeholder="time"
+              value={endTime}
+              onChange={(e) => setEndTime(e.target.value)}
+              className="border border-gray-300 rounded-md p-2 mb-4 w-full"
+            />
+            <input
               type="text"
               placeholder=" Event Address"
               value={address}
@@ -93,7 +131,7 @@ const Events = () => {
             />
             <input
               type="file"
-              onChange={(e) => setNewEvent(e.target.files[0])}
+              onChange={(e) => setImage(e.target.files[0])}
               className="border border-gray-300 rounded-md p-2 mb-4 w-full"
             />
             <button onClick={() => setShowModal(false)}>Cancel</button>

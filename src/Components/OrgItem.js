@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { getOrgById } from "../api/orgnaizationApi";
+import { getOrgById, deleteOrgById } from "../api/orgnaizationApi";
 import { Link } from "react-router-dom";
 import Modal from "./Modal";
 import { useState } from "react";
 import { updateOrgById } from "../api/orgnaizationApi";
 import { useMutation } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 const OrgItem = ({ org }) => {
   const [showModal, setShowModal] = useState(false);
@@ -20,6 +21,12 @@ const OrgItem = ({ org }) => {
     mutationFn: () => updateOrgById(org._id, editOrg),
   });
   const navegation = useNavigate();
+  const queryClient = useQueryClient();
+  const handelDelete = async () => {
+    await deleteOrgById(org?._id);
+    queryClient.invalidateQueries(["organization"]);
+  };
+
   const handelNavegation = () => {
     navegation(`/organization/profile:${org._id}`);
   };
@@ -60,6 +67,12 @@ const OrgItem = ({ org }) => {
           }}
         >
           Edit
+        </button>
+        <button
+          className="ml-auto w-[25%] px-3 py-2 rounded-md text-sm md:text-xl border border-black flex justify-center items-center bg-red-400 hover:bg-red-600"
+          onClick={handelDelete}
+        >
+          delete
         </button>
         <Modal show={showModal} onClose={() => setShowModal(false)}>
           <h3>Edit Profile</h3>

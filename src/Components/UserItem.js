@@ -1,10 +1,11 @@
 import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
-import { getUserById, deleteUser, updateUser } from "../api/users";
+import { getUserById, deleteUser, updateUserInfo } from "../api/users";
 import { useState } from "react";
 import Modal from "./Modal";
 import { useMutation } from "@tanstack/react-query";
+import { BASE_URL } from "../api";
 
 const UserItem = ({ user }) => {
   // const { data } = useQuery({
@@ -26,7 +27,7 @@ const UserItem = ({ user }) => {
   };
   const { mutate } = useMutation({
     mutateKey: ["editUser", user._id],
-    mutationFn: () => updateUser(editUser),
+    mutationFn: () => updateUserInfo(user._id, editUser),
     onSuccess: () => {
       queryClient.invalidateQueries(["users"]);
       setShowModal(false);
@@ -34,7 +35,8 @@ const UserItem = ({ user }) => {
   });
   const handleChange = (e) => {
     if (e.target.name === "image") {
-      setEditUser({ ...editUser, [e.target.name]: [e.target.files[0]] });
+      console.log("I AM IMAGE BEING CALLED", e.target.files[0]);
+      setEditUser({ ...editUser, [e.target.name]: e.target.files[0] });
     } else {
       setEditUser({ ...editUser, [e.target.name]: e.target.value });
     }
@@ -44,12 +46,8 @@ const UserItem = ({ user }) => {
       <div className="w-[300px] h-[400px]  border border-black rounded-md flex flex-col justify-between items-center p-4">
         <h1 className="text-md font-bold">{user.username}</h1>
         <img
-          src={
-            user?.image
-              ? `http://localhost:8000/${user.images}`
-              : `https://via.placeholder.com/200/000000?`
-          }
-          alt={`${user.username}-image`}
+          src={BASE_URL + "/" + user?.image}
+          alt={`${user?.username}-image`}
           className="w-[200px] rounded-md
       "
         />
@@ -79,6 +77,24 @@ const UserItem = ({ user }) => {
             type="text"
             name="phone"
             placeholder="phone"
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="firstName"
+            placeholder="firstName"
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="lastName"
+            placeholder="lastName"
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="gender"
+            placeholder="lastName"
             onChange={handleChange}
           />
           <input

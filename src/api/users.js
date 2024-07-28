@@ -25,18 +25,32 @@ const deleteUser = async (id) => {
     console.error("Error while deleting user", error);
   }
 };
-const updateUser = async (userInfo) => {
+const updateUser = async (adminInfo) => {
+  console.log("userInfo", adminInfo);
+  const formData = new FormData();
+  for (const key in adminInfo) {
+    formData.append(key, adminInfo[key]);
+  }
+  try {
+    const res = await instance.put(`/user/myprofile`, formData);
+
+    return res.data;
+  } catch (error) {
+    console.error("Error while creating user", error);
+  }
+};
+const updateUserInfo = async (id, userInfo) => {
   console.log("userInfo", userInfo);
   const formData = new FormData();
   for (const key in userInfo) {
     formData.append(key, userInfo[key]);
   }
   try {
-    const res = await instance.put("/user/myprofile", formData);
+    const res = await instance.put(`/user/myprofile/${id}`, formData);
     return res.data;
   } catch (error) {
-    console.error("Error while creating user", error);
+    console.error("Error while updating user", error);
   }
 };
 
-export { getAllUsers, getUserById, deleteUser, updateUser };
+export { getAllUsers, getUserById, deleteUser, updateUser, updateUserInfo };

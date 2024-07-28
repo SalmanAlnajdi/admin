@@ -23,15 +23,16 @@ const DonationItem = ({ donationItemI }) => {
     await deleteDonation(donationItemI?._id);
     queryClient.invalidateQueries("donations");
   };
-  console.log(donationItemI);
+  if (!user) return <div>Loading...</div>;
+
   return (
     <div className=" flex flex-row">
       <div className="w-[300px] h-[400px]  border border-black rounded-md flex flex-col justify-between items-center p-4">
         <h1 className="text-md font-bold"> Name {donationItemI?.name}</h1>
-        <h1 className="text-md font-bold">Amount: {donationItemI?.amount}</h1>
         <h1 className="text-md font-bold">
-          Items: {donationItemI?.items?.map((item) => item)}
+          Created By : {donationItemI?.createBy?.username}
         </h1>
+
         <button>
           <Link to={`/donations/${donationItemI?._id}`}>click</Link>
         </button>

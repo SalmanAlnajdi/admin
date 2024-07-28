@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Modal from "./Modal";
 import { useState } from "react";
 import { upDateEventById } from "../api/events";
+import { BASE_URL } from "../api/index";
 
 const EventItem = ({ event }) => {
   //const { data } = useQuery({
@@ -34,22 +35,18 @@ const EventItem = ({ event }) => {
   });
   const handleChange = (e) => {
     if (e.target.name === "image") {
-      setEditEvent({ ...editEvent, [e.target.name]: [e.target.files[0]] });
+      setEditEvent({ ...editEvent, [e.target.name]: e.target.files[0] });
     } else {
       setEditEvent({ ...editEvent, [e.target.name]: e.target.value });
     }
   };
-
+  console.log(event);
   return (
     <div>
       <div className="w-[300px] h-[400px]  border border-black rounded-md flex flex-col justify-between items-center p-4">
         <h1 className="text-md font-bold">{event?.name}</h1>
         <img
-          src={
-            event?.images
-              ? `http://localhost:8000/${event.image}`
-              : `https://via.placeholder.com/200/000000?`
-          }
+          src={BASE_URL + "/" + event?.image}
           alt={`${event.image}-image`}
           className="w-[200px] rounded-md
       "
@@ -95,8 +92,14 @@ const EventItem = ({ event }) => {
             onChange={handleChange}
           />
           <input
+            type="time"
+            name="start time"
+            placeholder="start time"
+            onChange={handleChange}
+          />
+          <input
             type="file"
-            name="images"
+            name="image"
             placeholder="image"
             onChange={handleChange}
           />

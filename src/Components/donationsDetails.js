@@ -18,9 +18,11 @@ const DonationDetails = () => {
 
   return (
     <div className="w-full h-full bg-slate-400 flex justify-center flex-col items-center">
-      <h1>{donation?._id}</h1>
-      <h1>{donation?.date}</h1>
-      <h1>{donation?.phone}</h1>
+      <h1>id: {donation?._id}</h1>
+      <h1>date: {donation?.date}</h1>
+      <h1>descreption: {donation?.descreption}</h1>
+      <h1>condition: {donation?.condition}</h1>
+      <h1>name: {donation?.name}</h1>
       <img
         src={donation?.image}
         alt={`${donation?.name}-image`}

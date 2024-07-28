@@ -11,7 +11,7 @@ import Donations from "./pages/Donations";
 
 import { OrgDetails } from "./Components/OrgDetails";
 import { Regester } from "./pages/Regester";
-import userContext from "./context/userContext";
+
 import UserContext from "./context/userContext";
 import { getToken } from "./api/storage";
 import EventDetails from "./Components/EventDetails";

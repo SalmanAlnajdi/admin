@@ -14,17 +14,19 @@ export const Orgnaization = () => {
     ?.filter((org) => org.username.toLowerCase().includes(query.toLowerCase()))
     .map((org) => <OrgItem org={org} key={org.username} />);
   if (isLoading) return <div>Loading...</div>;
+  const totalOrgs = data?.length;
 
   return (
-    <div className=" bg-gray-300 w-full h-full">
+    <div className="bg-green-400 w-full h-100% flex flex-wrap gap-3 justify-center items-center p-3">
       <h1>Orgnaization</h1>
-      <div>
+      <div className=" w-full  flex justify-center">
         <input
           type="text"
           placeholder="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
+        <div>Total Orgs: {totalOrgs}</div>
       </div>
       <div className=" flex flex-col flex-wrap md:flex-row gap-[20px] w-[76vw]  justify-center items-center mb-[50px]">
         {organizationList}

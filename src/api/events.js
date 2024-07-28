@@ -37,7 +37,7 @@ const createEvent = async (event) => {
   for (const key in event) {
     formData.append(key, event[key]);
   }
-  const { data } = await instance.post("/event/create", formData);
+  const { data } = await instance.post("/event/create/", formData);
   if (data.success) {
     return data;
   }
