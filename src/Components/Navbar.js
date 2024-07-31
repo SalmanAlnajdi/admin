@@ -6,7 +6,7 @@ import Button from "./Button";
 import { LogOut } from "./LogOut";
 import { useNavigate } from "react-router-dom";
 
-export const Navbar = () => {
+export const Navbar = ({ toggleSidebar }) => {
   const [user, setUser] = useContext(UserContext);
   const nav = useNavigate();
   const handleLogOut = () => {
@@ -19,6 +19,10 @@ export const Navbar = () => {
   };
   return (
     <div className="bg-gray-800 w-full flex justify-around items-center text-white">
+      <button
+        onClick={toggleSidebar}
+        className=" text-white focus:outline-none relative"
+      ></button>
       <div className="flex items-center space-x-2 text-white ">
         <input
           type="checkbox"

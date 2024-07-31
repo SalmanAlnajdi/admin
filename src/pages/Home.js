@@ -3,7 +3,7 @@ import AdminCategory from "../Components/AdminCategory";
 import { Link } from "react-router-dom";
 const Home = () => {
   return (
-    <div className="bg-green-400 w-full h-full flex flex-wrap gap-3 justify-center items-center">
+    <div className="w-full  min-w-[26rem] bg-[#323048] relative p-[0.875rem] rounded-[0.625rem] h-[24.25rem] max-w-[80.5rem]  lg:w-full flex flex-col lg:flex-row gap-[0.875rem]">
       <Link to="/Events">
         <AdminCategory name={"Events"} information={"for more information"} />
       </Link>
